@@ -6,6 +6,21 @@
   <div class="row">
     <div class="col-md-6">
       <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
+
+      <!--  머스테치 ture-->
+      {{#luserName}}
+        User : <span id="user">{{luserName}}</span>  ||
+        Email : <span id="email">{{userEmail}}</span>
+        <!-- 스프링 시큐리티 제공 logout-->
+        <a href="/logout" class="btn btn-info active" role="button">logout</a>
+      {{/luserName}}
+
+      <!--  머스테치 false-->
+      {{^luserName}}
+        <!--  스프링 시큐리티 제공 login-->
+        <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Login via Google</a>
+      {{/luserName}}
+
     </div>
   </div>
   <br>
