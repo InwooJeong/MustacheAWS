@@ -3,15 +3,18 @@ package org.example.springboot.domain.posts;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.springboot.domain.BaseTimeEntity;
 
 import javax.persistence.*;
+
+//BaseTimeEntity 상속이 필요!!
 
 @Getter
 //기본 생성자 자동 추가
 @NoArgsConstructor
 //테이블과 링크될 클래스
 @Entity
-public class Posts {
+public class Posts extends BaseTimeEntity {
 
   //pk
   @Id
