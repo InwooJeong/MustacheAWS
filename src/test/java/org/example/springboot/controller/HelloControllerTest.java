@@ -1,9 +1,13 @@
 package org.example.springboot.controller;
 
+import org.example.springboot.config.auth.SecurityConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -17,7 +21,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //스프링 테스트 어노테이션 중 WEB에 집중
 //선언할 경우 Controller, ContollerAdvice 어노테이션 사용 가능
 //Service, Component, Repository 어노테이션 사용 불가
-@WebMvcTest
+@WebMvcTest(controllers = HelloController.class, excludeFilters = {
+        @ComponentScan.Filter(type= FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+    }
+)
 public class HelloControllerTest {
 
     //빈 주입
@@ -26,6 +33,7 @@ public class HelloControllerTest {
     //스프링 MVC 테스트의 시작점 - GET, POST 등에 대한 API 테스트 가능
     private MockMvc mvc;
 
+    @WithMockUser(roles="USER")
     @Test
     public void hello_will_returned() throws Exception{
         String hello = "hello";
@@ -35,6 +43,7 @@ public class HelloControllerTest {
                 .andExpect(content().string(hello));        //응답 본문 내용 검증 -> Controller 에서 hello를 리턴 하는가?
     }
 
+    @WithMockUser(roles="USER")
     @Test
     public void helloDTO_will_returned() throws Exception{
         String name = "hello";

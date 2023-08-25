@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @Controller
-@Slf4j
 public class IndexController {
 
   private final PostsService postsService;
