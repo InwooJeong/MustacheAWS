@@ -38,7 +38,7 @@ public class IndexController {
       log.info("userEmail : " + user.getEmail());
       String userEmail = user.getEmail();
       //model.addAttribute("user",user);
-      model.addAttribute("userName",userName);
+      model.addAttribute("loginUserName",userName);
       model.addAttribute("userEmail",userEmail);
     }
     return "index";
