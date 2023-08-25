@@ -2,6 +2,7 @@ package org.example.springboot.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.springboot.config.auth.LoginUser;
 import org.example.springboot.config.auth.dto.SessionUser;
 import org.example.springboot.dto.PostsResponseDto;
 import org.example.springboot.service.posts.PostsService;
@@ -26,20 +27,22 @@ public class IndexController {
   //소셜 로그인 -> userName을 model에 저장
 
   @GetMapping("/")
-  public String index(Model model){
+  public String index(Model model, @LoginUser SessionUser user){
     model.addAttribute("posts",postsService.findAllDesc());
     //CustomOAuth2UserService에서 로그인하면 세션에 SessionUser 저장
-    SessionUser user = (SessionUser) httpSession.getAttribute("user");
+    //-> @으로 개선
+    //SessionUser user = (SessionUser) httpSession.getAttribute("user");
+    log.info("user : " + user);
     //세션에 저장된 값이 있을 때만 model에 등록
     //없으면 값이 없으니 로그인 버튼이 보인다.
     if(user != null){
       log.info("userName : " + user.getName());
-      String userName = user.getName();
+      //String userName = user.getName();
       log.info("userEmail : " + user.getEmail());
-      String userEmail = user.getEmail();
+      //String userEmail = user.getEmail();
       //model.addAttribute("user",user);
-      model.addAttribute("loginUserName",userName);
-      model.addAttribute("userEmail",userEmail);
+      model.addAttribute("loginUserName",user.getName());
+      model.addAttribute("userEmail",user.getEmail());
     }
     return "index";
   }
